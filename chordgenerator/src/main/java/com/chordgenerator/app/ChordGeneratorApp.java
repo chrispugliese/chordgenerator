@@ -17,9 +17,15 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import org.jfugue.player.Player;
 import org.jfugue.pattern.Pattern;
 
+public class ChordGeneratorApp extends Application {
 
-public class App {
-    public static void main(String[] args) {
-        System.out.println("Hello World!");
+	@Override
+	public void start(Stage primaryStage) {
+		// TODO: Add your JavaFX application initialization code here
+		primaryStage.setTitle("Chord Generator");
+		primaryStage.show();
+	}
+        public static void main(String[] args){
+        launch(args);
     }
 }
