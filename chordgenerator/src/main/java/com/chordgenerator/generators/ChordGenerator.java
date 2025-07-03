@@ -72,8 +72,6 @@ public class ChordGenerator {
             String third = scale.get((degree + 2) % scale.size());
             String fifth = scale.get((degree + 4) % scale.size());
             return new String[] {root, third, fifth};
-
-
         }
 
         public static List<String[]> generateChords(String rootNote, String scaleType) {
