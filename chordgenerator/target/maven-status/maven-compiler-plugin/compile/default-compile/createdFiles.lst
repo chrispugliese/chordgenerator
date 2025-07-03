@@ -1,2 +1,3 @@
 com/chordgenerator/app/ChordGeneratorApp.class
 com/chordgenerator/app/App.class
+com/chordgenerator/generators/ChordGenerator.class
