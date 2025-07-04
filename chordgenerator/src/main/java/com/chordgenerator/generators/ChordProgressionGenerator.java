@@ -54,27 +54,29 @@ public class ChordProgressionGenerator {
         )        
     ));
 
-    public static List<String[]> generateProgression(String rootNote, String scaleType, String genre) {
+    public static List<String[]> generateProgression(String rootNote, String scaleType, String genre, int templateIndex) {
 
-        // get one of the genre templates
         List<String[]> templates = PROGRESSION_TEMPLATES.get(genre.toLowerCase());
-        if (templates == null){
-            throw new IllegalArgumentException("Unsupported Genre: " + genre);
+        if (templates == null) {
+            throw new IllegalArgumentException("Unsupported genre: " + genre);
         }
-        String[] chosenProgression = templates.get(new Random(). nextInt(templates.size()));
+        if (templateIndex < 0 || templateIndex >= templates.size()) {
+            throw new IllegalArgumentException("Template index out of bounds: " + templateIndex);
+        }
 
+        // now pick *that* one, not a random one
+        String[] chosenProgression = templates.get(templateIndex);
+
+        // (the rest is identical to your original)
         String[] scale = ChordGenerator.generateScale(rootNote, scaleType);
         List<String> scaleList = Arrays.asList(scale);
-
         List<String[]> progressionChords = new ArrayList<>();
 
-        for (String roman : chosenProgression){
+        for (String roman : chosenProgression) {
             Integer degree = ROMAN_TO_DEGREE.get(roman);
-            if (degree == null){
-                throw new IllegalArgumentException("Unsupported chords: " + roman);
-
+            if (degree == null) {
+                throw new IllegalArgumentException("Unsupported chord: " + roman);
             }
-
             String[] chord = ChordGenerator.buildChord(scaleList.get(degree), "Major");
             progressionChords.add(chord);
         }
@@ -82,19 +84,35 @@ public class ChordProgressionGenerator {
         return progressionChords;
     }
     public static void main(String[] args) {
-    String[] testTemplate = { "I", "V", "vi", "IV" };
-    PROGRESSION_TEMPLATES.put("testpop",
-        Collections.singletonList(testTemplate)
-    );
+        String root = "D#";
+        String mode = "Natural Minor (Aeolian)";
+        String genre = "classical";
+        int index = 3;       // 0 → the I–V–vi–IV progression
 
+        // 1) show the raw Roman‐numerals template from the map
+        String[] raw = PROGRESSION_TEMPLATES
+                        .get(genre.toLowerCase())
+                        .get(index);
 
-    List<String[]> chords = generateProgression("C", "Major (Ionian)", "testpop");
+        System.out.println("Raw Roman template for \"" 
+                        + genre 
+                        + "\" #"+ index 
+                        + ": " 
+                        + Arrays.toString(raw));
 
-    System.out.println("Generated chords size: " + chords.size());
-    for (int i = 0; i < chords.size(); i++) {
-        System.out.println("Chord " + i + ": " + Arrays.toString(chords.get(i)));
+        // 2) convert it to chords
+        List<String[]> chords = generateProgression(root, mode, genre, index);
+
+        // 3) print the 4 chord‐arrays
+        System.out.println("→ Chords built from that template:");
+        for (int i = 0; i < chords.size(); i++) {
+            System.out.printf("   %d: %s%n", 
+                i, 
+                Arrays.toString(chords.get(i))
+            );
+        }
     }
-}
+
     
 }
 
