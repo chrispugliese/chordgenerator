@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class MidiExporter {
 
-        public static boolean exportAsFormat1(Pattern pattern, String filename, int bpm){
+        public static boolean exportAsFormat1(Pattern pattern, String filename){
         try{
 
             // convert jfugue pattern to midi sequence
@@ -36,7 +36,7 @@ public class MidiExporter {
             File midiFile = new File(filename);
             MidiSystem.write(format1, 1, midiFile);
 
-            System.out.println("Exported MIDI in Format 1 to: " + midiFile.getAbsolutePath() + " with BPM: " + bpm);
+            System.out.println("Exported MIDI in Format 1 to: " + midiFile.getAbsolutePath());
             return true;
         } catch (IOException | InvalidMidiDataException e){
             System.err.println("Failed to export MIDI: " + e.getMessage());
