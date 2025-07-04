@@ -81,9 +81,20 @@ public class ChordProgressionGenerator {
 
         return progressionChords;
     }
-        public static void TEST_OVERRIDE_TEMPLATE(List<String[]> testProgressions, String genre) {
-            PROGRESSION_TEMPLATES.put(genre, testProgressions);
-        }
+    public static void main(String[] args) {
+    String[] testTemplate = { "I", "V", "vi", "IV" };
+    PROGRESSION_TEMPLATES.put("testpop",
+        Collections.singletonList(testTemplate)
+    );
+
+
+    List<String[]> chords = generateProgression("C", "Major (Ionian)", "testpop");
+
+    System.out.println("Generated chords size: " + chords.size());
+    for (int i = 0; i < chords.size(); i++) {
+        System.out.println("Chord " + i + ": " + Arrays.toString(chords.get(i)));
+    }
+}
     
 }
 
