@@ -40,6 +40,24 @@ public class ChordGenerator {
         SCALE_PATTERNS.put("Chromatic",                 new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1});
     }
 
+    private static final Map<String, int[]> CHORD_SHAPES = new HashMap<>();
+    static{
+        CHORD_SHAPES.put("Major",           new int[]{0, 4, 7});
+        CHORD_SHAPES.put("Minor",           new int[]{0, 3, 7});
+        CHORD_SHAPES.put("Diminished",      new int[]{0, 3, 6});
+        CHORD_SHAPES.put("Augmented",       new int[]{0, 4, 8});
+        CHORD_SHAPES.put("Sus2",            new int[]{0, 2, 7});
+        CHORD_SHAPES.put("Sus4",            new int[]{0, 5, 7});
+
+        // 7th chords
+        CHORD_SHAPES.put("Major7",          new int[]{0, 4, 7, 11});
+        CHORD_SHAPES.put("Dominant7",       new int[]{0, 4, 7, 10});
+        CHORD_SHAPES.put("Minor7",          new int[]{0, 3, 7, 10});
+        CHORD_SHAPES.put("HalfDim7",        new int[]{0, 3, 6, 10});
+        CHORD_SHAPES.put("Dim7",            new int[]{0, 3, 6, 9});
+        CHORD_SHAPES.put("MinorMaj7",       new int[]{0, 3, 7, 11});
+    }
+
     public static String[] generateScale(String rootNote, String scaleType){
         List<String> scale = new ArrayList<>();
         int[] intervals = SCALE_PATTERNS.get(scaleType);
@@ -67,28 +85,46 @@ public class ChordGenerator {
 
         }
 
-        public static String[] buildTriad(List<String> scale, int degree){
-            String root = scale.get(degree % scale.size());
-            String third = scale.get((degree + 2) % scale.size());
-            String fifth = scale.get((degree + 4) % scale.size());
-            return new String[] {root, third, fifth};
-        }
-
-        public static List<String[]> generateChords(String rootNote, String scaleType) {
-            String[] scale = generateScale(rootNote, scaleType);
-            List<String> scaleList = Arrays.asList(scale);
-            List<String[]> chords = new ArrayList<>();
-
-            System.out.println("Generated scale: " + scaleList);  // Add this line
-            
-            
-            for (int i = 0; i < scaleList.size(); i++){
-                String[] triad = buildTriad(scaleList, i);
-                System.out.println("Chord " + i + ": " + Arrays.toString(triad));  // Add this line
-                chords.add(triad);
-
+        public static String[] buildChord(String root, String chordType) {
+            int[] intervals = CHORD_SHAPES.get(chordType);
+            if (intervals == null) {
+                throw new IllegalArgumentException("Unsupported chord type: " + chordType);
             }
-            
-            return chords;
+
+            List<String> chord = new ArrayList<>();
+            int rootIndex = Arrays.asList(CHROMATIC).indexOf(root);
+            if(rootIndex == -1 ){
+                throw new IllegalArgumentException("Invalid rootnote: " + root);
+            }
+            for (int interval : intervals){
+                int noteIndex = (rootIndex + interval) % 12;
+                chord.add(CHROMATIC[noteIndex]);
+            }
+            return chord.toArray(new String[0]);
         }
+
+        // public static String[] buildTriad(List<String> scale, int degree){
+        //     String root = scale.get(degree % scale.size());
+        //     String third = scale.get((degree + 2) % scale.size());
+        //     String fifth = scale.get((degree + 4) % scale.size());
+        //     return new String[] {root, third, fifth};
+        // }
+
+        // public static List<String[]> generateChords(String rootNote, String scaleType) {
+        //     String[] scale = generateScale(rootNote, scaleType);
+        //     List<String> scaleList = Arrays.asList(scale);
+        //     List<String[]> chords = new ArrayList<>();
+
+        //     System.out.println("Generated scale: " + scaleList);  // Add this line
+            
+            
+        //     for (int i = 0; i < scaleList.size(); i++){
+        //         String[] triad = buildTriad(scaleList, i);
+        //         System.out.println("Chord " + i + ": " + Arrays.toString(triad));  // Add this line
+        //         chords.add(triad);
+
+        //     }
+            
+        //     return chords;
+        // }
 }

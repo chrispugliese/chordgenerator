@@ -1,3 +1,5 @@
 /Users/chrispugliese/Desktop/git/chordgenerator/chordgenerator/src/main/java/com/chordgenerator/app/App.java
 /Users/chrispugliese/Desktop/git/chordgenerator/chordgenerator/src/main/java/com/chordgenerator/app/ChordGeneratorApp.java
+/Users/chrispugliese/Desktop/git/chordgenerator/chordgenerator/src/main/java/com/chordgenerator/export/MidiExporter.java
 /Users/chrispugliese/Desktop/git/chordgenerator/chordgenerator/src/main/java/com/chordgenerator/generators/ChordGenerator.java
+/Users/chrispugliese/Desktop/git/chordgenerator/chordgenerator/src/main/java/com/chordgenerator/generators/ChordProgressionGenerator.java
