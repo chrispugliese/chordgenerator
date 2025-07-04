@@ -84,6 +84,21 @@ public class ChordProgressionGenerator {
         return progressionChords;
     }
 
+        public static Set<String> getAvailableProgressions(){
+            return PROGRESSION_TEMPLATES.keySet();
+        }
+
+        public static List<String> getProgressionTemplates(String genre) {
+            List<String[]> raw = PROGRESSION_TEMPLATES.get(genre.toLowerCase());
+            if (raw == null) return List.of();
+
+            List<String> readable = new ArrayList<>();
+            for (String[] progression : raw) {
+                readable.add(String.join(" - ", progression));
+        }
+        return readable;
+    }
+
 
     
 }
